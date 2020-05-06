@@ -152,6 +152,7 @@
                         <th>Location</th>
                         <th>Village Elder</th>
                         <th>Occurrence</th>
+                        <th>Reported</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -161,6 +162,7 @@
                             <td>{{$complain->geography->location}}</td>
                             <td>{{$complain->against}}</td>
                             <td>{{$complain->occurrence_date}}</td>
+                            <td>{{$complain->created_at}}</td>
                         </tr>
                     @endforeach
 
