@@ -102,13 +102,13 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/home">
                             <span data-feather="home"></span>
                             Dashboard <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/home">
                             <span data-feather="file"></span>
                             Complains
                         </a>
@@ -151,6 +151,7 @@
                         <th>Complain</th>
                         <th>Location</th>
                         <th>Village Elder</th>
+                        <th>Occurrence</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -159,6 +160,7 @@
                             <td>{{$complain->description}}</td>
                             <td>{{$complain->geography->location}}</td>
                             <td>{{$complain->against}}</td>
+                            <td>{{$complain->occurrence_date}}</td>
                         </tr>
                     @endforeach
 
