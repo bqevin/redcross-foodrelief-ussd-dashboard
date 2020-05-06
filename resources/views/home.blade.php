@@ -145,10 +145,10 @@
 
             <h2>Complains</h2>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Complain</th>
+                        <th>Feedback</th>
                         <th>Location</th>
                         <th>Village Elder</th>
                         <th>Occurrence</th>
@@ -162,7 +162,7 @@
                             <td>{{$complain->geography->location}}</td>
                             <td>{{$complain->against}}</td>
                             <td>{{$complain->occurrence_date}}</td>
-                            <td>{{$complain->created_at}}</td>
+                            <td>{{$complain->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
                         </tr>
                     @endforeach
 
