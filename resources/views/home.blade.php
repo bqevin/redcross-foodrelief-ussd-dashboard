@@ -148,21 +148,17 @@
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
+                        <th>Complain</th>
+                        <th>Location</th>
+                        <th>Village Elder</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($complains as $complain)
                         <tr>
-                            <td>1,001</td>
                             <td>{{$complain->description}}</td>
                             <td>{{$complain->geography->location}}</td>
-                            <td>dolor</td>
-                            <td>sit</td>
+                            <td>{{$complain->against}}</td>
                         </tr>
                     @endforeach
 
