@@ -16,6 +16,7 @@ class CreateGeographyTable extends Migration
         Schema::create('geography', function (Blueprint $table) {
             $table->id();
             $table->string('location');
+            $table->bigInteger('complain_id')->unsigned();
             $table->string('ward');
             $table->string('constituency');
             $table->timestamps();
