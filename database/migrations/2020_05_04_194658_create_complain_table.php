@@ -13,11 +13,12 @@ class CreateComplainTable extends Migration
      */
     public function up()
     {
-        Schema::create('complain', function (Blueprint $table) {
+        Schema::create('complains', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->string('against');
+            $table->string('official');
             $table->string('occurrence_date');
+            $table->bigInteger('geo_location_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
