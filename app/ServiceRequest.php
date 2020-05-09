@@ -15,7 +15,7 @@ class ServiceRequest extends Model
     const MISC = 'misc';
 
 
-    protected $fillable = ['details', 'contact_info', 'official', 'geo_location_id', 'type'];
+    protected $fillable = ['details', 'contact_info', 'official', 'geo_location_id', 'type', 'household_number'];
 
     public function geography()
     {
