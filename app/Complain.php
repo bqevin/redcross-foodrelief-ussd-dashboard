@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Complain extends Model
 {
-    protected $table = 'complain';
-    protected $fillable = ['description', 'against', 'occurrence_date'];
+    protected $fillable = ['description', 'official', 'occurrence_date','geo_location_id'];
 
-    public function geography()
+    public function geoLocation()
     {
-        return $this->hasOne(Geography::class);
+        return $this->belongsTo(GeoLocation::class);
     }
 }
