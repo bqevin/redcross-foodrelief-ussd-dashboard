@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Complain;
+use App\Request;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
@@ -19,10 +21,15 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index()
+    public function complains()
     {
-        return view('home', ['complains' => Complain::all()]);
+        return view('complains', ['complains' => Complain::all()]);
+    }
+
+    public function requests()
+    {
+        return view('requests', ['requests' => Request::all()]);
     }
 }
