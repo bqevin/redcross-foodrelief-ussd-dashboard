@@ -143,7 +143,7 @@
                             <td>{{$serviceRequest->details}}</td>
                             <td>{{$serviceRequest->contact_info}}</td>
                             <td>{{$serviceRequest->official}}</td>
-                            <td>{{$serviceRequest->type}}</td>
+                            <td>{{$serviceRequest->getServiceName($serviceRequest->type)}}</td>
                             <td>{{$serviceRequest->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
                         </tr>
                     @endforeach

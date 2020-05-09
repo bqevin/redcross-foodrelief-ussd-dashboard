@@ -159,7 +159,7 @@
                     @foreach ($feedbacks as $feedback)
                         <tr>
                             <td>{{$feedback->description}}</td>
-                            <td>{{$feedback->geoLocation->location}}</td>
+                            <td>{{($feedback->geoLocation) ? $feedback->geoLocation->location_description : 'N/A'}}</td>
                             <td>{{$feedback->official}}</td>
                             <td>{{$feedback->occurrence_date}}</td>
                             <td>{{$feedback->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
