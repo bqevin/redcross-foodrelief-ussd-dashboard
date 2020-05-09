@@ -108,9 +108,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/home">
+                        <a class="nav-link" href="/complains">
                             <span data-feather="file"></span>
-                            Complains
+                            Feedback
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/requests">
+                            <span data-feather="file"></span>
+                            Service Request
                         </a>
                     </li>
                 </ul>
@@ -143,7 +149,7 @@
                 </div>
             </div>
 
-            <h2>Complains</h2>
+            <h2>Relief Food Distribution Feedback</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -159,8 +165,8 @@
                     @foreach ($complains as $complain)
                         <tr>
                             <td>{{$complain->description}}</td>
-                            <td>{{$complain->geography->location}}</td>
-                            <td>{{$complain->against}}</td>
+                            <td>{{$complain->geoLocation->location}}</td>
+                            <td>{{$complain->official}}</td>
                             <td>{{$complain->occurrence_date}}</td>
                             <td>{{$complain->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
                         </tr>
