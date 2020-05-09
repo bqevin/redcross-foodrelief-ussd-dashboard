@@ -102,15 +102,9 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/home">
-                            <span data-feather="home"></span>
-                            Dashboard <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/complains">
+                        <a class="nav-link active" href="/complains">
                             <span data-feather="file"></span>
-                            Feedback
+                            Feedback <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item active">
