@@ -13,12 +13,13 @@ class CreateGeographyTable extends Migration
      */
     public function up()
     {
-        Schema::create('geography', function (Blueprint $table) {
+        Schema::create('geo_locations', function (Blueprint $table) {
             $table->id();
-            $table->string('location');
-            $table->bigInteger('complain_id')->unsigned()->nullable();
+            $table->text('location_description');
             $table->string('ward');
             $table->string('constituency');
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->timestamps();
         });
     }
