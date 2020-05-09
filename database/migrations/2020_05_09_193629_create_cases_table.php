@@ -13,9 +13,9 @@ class CreateCasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cases', function (Blueprint $table) {
+        Schema::create('service_request_types', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('request_id')->unsigned()->nullable();
+            $table->bigInteger('service_request_id')->unsigned()->nullable();
             $table->text('details')->nullable();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateCasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cases');
+        Schema::dropIfExists('service_request_types');
     }
 }

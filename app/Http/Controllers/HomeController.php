@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Complain;
-use App\Request;
+use App\Feedback;
+use App\ServiceRequest;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -23,13 +23,13 @@ class HomeController extends Controller
      *
      * @return Renderable
      */
-    public function complains()
+    public function feedback()
     {
-        return view('complains', ['complains' => Complain::all()]);
+        return view('feedback', ['feedbacks' => Feedback::all()]);
     }
 
-    public function requests()
+    public function serviceRequest()
     {
-        return view('requests', ['requests' => Request::all()]);
+        return view('service-request', ['serviceRequests' => ServiceRequest::all()]);
     }
 }

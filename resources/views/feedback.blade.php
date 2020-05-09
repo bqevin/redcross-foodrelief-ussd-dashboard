@@ -102,13 +102,13 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/complains">
+                        <a class="nav-link active" href="/feedback">
                             <span data-feather="file"></span>
                             Feedback <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/requests">
+                        <a class="nav-link" href="/service-request">
                             <span data-feather="file"></span>
                             Service Request
                         </a>
@@ -156,13 +156,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($complains as $complain)
+                    @foreach ($feedbacks as $feedback)
                         <tr>
-                            <td>{{$complain->description}}</td>
-                            <td>{{$complain->geoLocation->location}}</td>
-                            <td>{{$complain->official}}</td>
-                            <td>{{$complain->occurrence_date}}</td>
-                            <td>{{$complain->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
+                            <td>{{$feedback->description}}</td>
+                            <td>{{$feedback->geoLocation->location}}</td>
+                            <td>{{$feedback->official}}</td>
+                            <td>{{$feedback->occurrence_date}}</td>
+                            <td>{{$feedback->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
                         </tr>
                     @endforeach
 

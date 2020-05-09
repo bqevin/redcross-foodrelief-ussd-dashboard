@@ -13,7 +13,7 @@ class CreateRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('service_requests', function (Blueprint $table) {
             $table->id();
             $table->string('details');
             $table->string('contact_info');
@@ -30,6 +30,6 @@ class CreateRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('service_requests');
     }
 }

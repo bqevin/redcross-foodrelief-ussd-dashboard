@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Complain extends Model
+class Feedback extends Model
 {
-    protected $fillable = ['description', 'official', 'occurrence_date','geo_location_id'];
+    protected $fillable = ['description', 'official', 'occurrence_date', 'geo_location_id'];
 
     public function geoLocation()
     {

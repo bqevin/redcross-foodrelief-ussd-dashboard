@@ -13,7 +13,7 @@ class AlterRequestsTableAddType extends Migration
      */
     public function up()
     {
-        Schema::table('requests', function (Blueprint $table) {
+        Schema::table('service_requests', function (Blueprint $table) {
             $table->string('type')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AlterRequestsTableAddType extends Migration
      */
     public function down()
     {
-        Schema::table('requests', function (Blueprint $table) {
+        Schema::table('service_requests', function (Blueprint $table) {
             //
         });
     }

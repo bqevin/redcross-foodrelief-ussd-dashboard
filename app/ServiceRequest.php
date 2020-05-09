@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class ServiceRequest extends Model
 {
     const HEALTH = 'health';
     const GARBAGE_COLLECTION = 'garbage_collection';

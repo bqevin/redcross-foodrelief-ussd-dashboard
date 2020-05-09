@@ -19,5 +19,5 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/complains', 'HomeController@complains')->name('complains');
-Route::get('/requests', 'HomeController@requests')->name('requests');
+Route::get('/feedback', 'HomeController@feedback')->name('feedback');
+Route::get('/service-request', 'HomeController@serviceRequest')->name('service-request');

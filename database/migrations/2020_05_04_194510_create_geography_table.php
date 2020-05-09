@@ -31,6 +31,6 @@ class CreateGeographyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('geography');
+        Schema::dropIfExists('geo_locations');
     }
 }
