@@ -13,7 +13,7 @@ class CreateComplainTable extends Migration
      */
     public function up()
     {
-        Schema::create('feedbacks', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->id();
             $table->string('description');
             $table->string('official');
@@ -30,6 +30,6 @@ class CreateComplainTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedbacks');
+        Schema::dropIfExists('feedback');
     }
 }
