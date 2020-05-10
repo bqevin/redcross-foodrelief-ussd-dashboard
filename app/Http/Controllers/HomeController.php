@@ -4,18 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Feedback;
 use App\ServiceRequest;
+use App\USSDService;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
+     * @var USSDService
+     */
+    private $ussdService;
+
+    /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param USSDService $ussdService
      */
-    public function __construct()
+    public function __construct(USSDService $ussdService)
     {
         $this->middleware('auth');
+        $this->ussdService = $ussdService;
     }
 
     /**
@@ -31,5 +39,16 @@ class HomeController extends Controller
     public function serviceRequest()
     {
         return view('service-request', ['serviceRequests' => ServiceRequest::all()]);
+    }
+
+    public function ussdRequest(Request $request)
+    {
+        //TODO: Validation
+        $sessionId = $request->get('sessionId');
+        $serviceCode = $request->get('serviceCode');
+        $phoneNumber = $request->get('phoneNumber');
+        $text = $request->get('text');
+
+        return $this->ussdService->processText($sessionId, $serviceCode, $phoneNumber, $text);
     }
 }
