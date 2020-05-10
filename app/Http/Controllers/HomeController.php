@@ -22,7 +22,6 @@ class HomeController extends Controller
      */
     public function __construct(USSDService $ussdService)
     {
-        $this->middleware('auth');
         $this->ussdService = $ussdService;
     }
 
