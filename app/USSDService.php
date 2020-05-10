@@ -10,6 +10,9 @@ class USSDService
         $phoneNumber,
         $text
     ) {
+        $ussdStringArray = explode("*", $text);
+        // Get ussd menu level number from the gateway
+        $steps = count($ussdStringArray);
         $response = "";
         if ($text == "") {
             $response = "CON Karibu katika huduma za Kaunti ya Mombasa. Tuko hapa kukuhudumia. \n\n";
