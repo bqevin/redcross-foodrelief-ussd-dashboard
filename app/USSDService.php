@@ -76,10 +76,9 @@ class USSDService
         $response = '';
         $servicesAnswersBag = [];
         $isCorrectLevel = $textArray[0] == 1 && $textArray[1] == $optionNumber;
+        $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
 
-        if ($isCorrectLevel) {
-            $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
-        } elseif ($isCorrectLevel && $stepsCount == 3) {
+        if ($isCorrectLevel && $stepsCount == 3) {
 //            array_push($servicesAnswersBag, ['details' => $textArray[3]]);
             $response = "CON Ni nambari ipi ya simu tunaweza kuwasiliana na wewe?";
         } elseif ($isCorrectLevel && $stepsCount == 4) {
