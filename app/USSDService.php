@@ -10,6 +10,7 @@ class USSDService
         $phoneNumber,
         $text
     ) {
+        $response = "";
         $ussdStringArray = explode("*", $text);
         // Get ussd menu level number from the gateway
         $steps = count($ussdStringArray);
@@ -39,5 +40,7 @@ class USSDService
         } else if ("1*7") {
             $response = "END Thank you for checking out our hotline. Goodbye!";
         }
+
+        return $response;
     }
 }
