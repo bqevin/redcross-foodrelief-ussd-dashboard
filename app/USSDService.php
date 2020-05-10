@@ -41,19 +41,19 @@ class USSDService
                     $text == "1*6"
                 ) {
                     $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
-                    array_push($servicesAnswersBag, ['details' => $ussdStringArray[3]]);
+//                    array_push($servicesAnswersBag, ['details' => $ussdStringArray[3]]);
                 } else if ($isServiceRequestOption && $steps == 3) {
                     $response = "CON Ni nambari ipi ya simu tunaweza kuwasiliana na wewe?";
-                    array_push($servicesAnswersBag, ['contact_info' => $ussdStringArray[4]]);
+//                    array_push($servicesAnswersBag, ['contact_info' => $ussdStringArray[4]]);
                 } elseif ($isServiceRequestOption && $steps == 4) {
                     $response = "CON Katika nyumba yenu muko wangapi?";
-                    array_push($servicesAnswersBag, ['household_number' => $ussdStringArray[5]]);
+//                    array_push($servicesAnswersBag, ['household_number' => $ussdStringArray[5]]);
                 } elseif ($isServiceRequestOption && $steps == 5) {
                     $response = "CON Tunaweza kuifikia vipi nyumba yako? Tafadhali tupe ramani, rangi ya mlango wako. Nambari ya chumba chako.";
 //                    array_push($servicesAnswersBag, ['details' => $ussdStringArray[6]]);
                 } elseif ($isServiceRequestOption && $steps == 6) {
                     $response = "CON Ni nani mzee wa nyumba kumi mtaani kwenu?";
-                    array_push($servicesAnswersBag, ['official' => $ussdStringArray[7]]);
+//                    array_push($servicesAnswersBag, ['official' => $ussdStringArray[7]]);
                 } else
                     if ($text == "2") {
                         //note that we are using the $phoneNumber variable we got form the HTTP POST data.
