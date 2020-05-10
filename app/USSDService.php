@@ -37,22 +37,22 @@ class USSDService
         } elseif ($isServiceRequestOption) {
             switch ($text) {
                 case "1*1":
-                    $this->loopServiceQuestions($ussdStringArray, $steps, 1);
+                    $response = $this->loopServiceQuestions($ussdStringArray, $steps, 1);
                     break;
                 case "1*2":
-                    $this->loopServiceQuestions($ussdStringArray, $steps, 2);
+                    $response = $this->loopServiceQuestions($ussdStringArray, $steps, 2);
                     break;
                 case "1*3":
-                    $this->loopServiceQuestions($ussdStringArray, $steps, 3);
+                    $response = $this->loopServiceQuestions($ussdStringArray, $steps, 3);
                     break;
                 case "1*4":
-                    $this->loopServiceQuestions($ussdStringArray, $steps, 4);
+                    $response = $this->loopServiceQuestions($ussdStringArray, $steps, 4);
                     break;
                 case "1*5":
-                    $this->loopServiceQuestions($ussdStringArray, $steps, 5);
+                    $response = $this->loopServiceQuestions($ussdStringArray, $steps, 5);
                     break;
                 case "1*6":
-                    $this->loopServiceQuestions($ussdStringArray, $steps, 6);
+                    $response = $this->loopServiceQuestions($ussdStringArray, $steps, 6);
                 default:
             }
         } elseif ($text == "2") {
@@ -72,27 +72,28 @@ class USSDService
 
     private function loopServiceQuestions($textArray, $stepsCount, int $optionNumber)
     {
+
         $response = '';
         $servicesAnswersBag = [];
         $isCorrectLevel = $textArray[0] == 1 && $textArray[1] == $optionNumber;
 
-        if ($isCorrectLevel && $stepsCount == 2) {
+        if ($isCorrectLevel) {
             $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
         } elseif ($isCorrectLevel && $stepsCount == 3) {
-            array_push($servicesAnswersBag, ['details' => $textArray[3]]);
+//            array_push($servicesAnswersBag, ['details' => $textArray[3]]);
             $response = "CON Ni nambari ipi ya simu tunaweza kuwasiliana na wewe?";
         } elseif ($isCorrectLevel && $stepsCount == 4) {
-            array_push($servicesAnswersBag, ['contact_info' => $textArray[4]]);
+//            array_push($servicesAnswersBag, ['contact_info' => $textArray[4]]);
             $response = "CON Katika nyumba yenu muko wangapi?";
         } elseif ($isCorrectLevel && $stepsCount == 5) {
-            array_push($servicesAnswersBag, ['household_number' => $textArray[5]]);
+//            array_push($servicesAnswersBag, ['household_number' => $textArray[5]]);
             $response = "CON Tunaweza kuifikia vipi nyumba yako? Tafadhali tupe ramani, rangi ya mlango wako. Nambari ya chumba chako.";
         } elseif ($isCorrectLevel && $stepsCount == 6) {
-            array_push($servicesAnswersBag, ['details' => $textArray[6]]);
+//            array_push($servicesAnswersBag, ['details' => $textArray[6]]);
             $response = "CON Ni nani mzee wa nyumba kumi mtaani kwenu?";
 //            array_push($servicesAnswersBag, ['official' => $textArray[7]]);
         }
 
-        echo $response;
+        return $response;
     }
 }
