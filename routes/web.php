@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/callback/ussd', 'HomeController@ussdRequest');
+Route::post('/callback/ussd', 'HomeController@ussdRequest');
 
 
 Auth::routes();
