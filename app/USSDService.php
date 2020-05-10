@@ -34,7 +34,7 @@ class USSDService
             $response .= "2. La";
         }
         // Nothing to do
-        if ($text == "2*2") {
+        else if ($text == "2*2") {
             $response = "END Thank you for checking us out. Goodbye!";
         } else if ("1*7") {
             $response = "END Thank you for checking out our hotline. Goodbye!";
