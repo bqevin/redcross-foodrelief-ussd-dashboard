@@ -82,17 +82,25 @@ class USSDService
 
         // end of questions
         if ($stepsCount > 6) {
-            //persist the answers, end the process
-            $servicesAnswersBag = [
-                'details' => isset($textArray[2]) ? $textArray[2] : null,
-                'contact_info' => isset($textArray[3]) ? $textArray[3] : null,
-                'household_number' => isset($textArray[4]) ? $textArray[4] : null,
+            // create Geo
+            $geo = GeoLocation::create([
                 'location_description' => isset($textArray[5]) ? $textArray[5] : null,
                 'ward' => "Old Town",
                 'constituency' => "Mvita Constituency",
+                'lat' => null,
+                'lng' => null
+            ]);
+
+            // Create  Service
+            ServiceRequest::create([
+                'details' => isset($textArray[2]) ? $textArray[2] : null,
+                'contact_info' => isset($textArray[3]) ? $textArray[3] : null,
+                'official' => isset($textArray[6]) ? $textArray[6] : null,
+                'geo_location_id' => $geo->id,
                 'type' => $textArray[1],
-                'official' => isset($textArray[6]) ? $textArray[6] : null
-            ];
+                'household_number' => isset($textArray[4]) ? $textArray[4] : null
+
+            ]);
 
             $response = "END Thank you for your request, a service agent will get back to you as soon as possible";
         }
@@ -130,14 +138,21 @@ class USSDService
 
         // end of questions
         if ($stepsCount > 7) {
-            $feedbackAnswersBag = [
-                'description' => isset($textArray[2]) ? $textArray[2] : null,
-                'occurrence_date' => isset($textArray[3]) ? $textArray[3] : null,
-                'official' => isset($textArray[4]) ? $textArray[4] : null,
+            // create Geo
+            $geo = GeoLocation::create([
                 'location_description' => isset($textArray[5]) ? $textArray[5] : null,
                 'ward' => isset($textArray[6]) ? $textArray[6] : null,
-                'constituency' => isset($textArray[7]) ? $textArray[7] : null
-            ];
+                'constituency' => isset($textArray[7]) ? $textArray[7] : null,
+                'lat' => null,
+                'lng' => null
+            ]);
+
+            Feedback::create([
+                'description' => isset($textArray[2]) ? $textArray[2] : null,
+                'official' => isset($textArray[4]) ? $textArray[4] : null,
+                'occurrence_date' => isset($textArray[3]) ? $textArray[3] : null,
+                'geo_location_id' => $geo->id
+            ]);
 
             $response = "END Ahsante kwa kuripoti hilo tukio. Itashughulikwa kwa haraka iwezekenavyo!";
         }
