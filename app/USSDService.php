@@ -42,7 +42,7 @@ class USSDService
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 6) {
             $response = $this->loopServiceQuestions($ussdStringArray, $steps);
         } elseif ($text == "2") {
-            $response = "CON Una maoni yoyote kuhusu ugawanyo wa chakula cha msaada kwa Kaunti ya Mombasa?\n";
+            $response = "CON Una maoni yoyote kuhusu ugavi wa chakula cha msaada kutoka kwa Kaunti ya Mombasa?\n";
             $response .= "1. Ndio\n";
             $response .= "2. La";
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1) {
