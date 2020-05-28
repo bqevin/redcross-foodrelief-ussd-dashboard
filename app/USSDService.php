@@ -267,26 +267,7 @@ class USSDService
         return $response;
     }
 
-    private function saveGeoLocationFeedback(array $textArray): GeoLocation
-    {
-        return GeoLocation::create([
-            'location_description' => isset($textArray[5]) ? $textArray[5] : null,
-            'ward' => isset($textArray[6]) ? $textArray[6] : null,
-            'constituency' => isset($textArray[7]) ? $textArray[7] : null,
-            'lat' => null,
-            'lng' => null
-        ]);
-    }
 
-    private function saveFeedback($textArray, GeoLocation $geo = null): Feedback
-    {
-        return Feedback::create([
-            'description' => isset($textArray[2]) ? $textArray[2] : null,
-            'official' => isset($textArray[4]) ? $textArray[4] : null,
-            'occurrence_date' => isset($textArray[3]) ? $textArray[3] : null,
-            'geo_location_id' => $geo ? $geo->id : null
-        ]);
-    }
 
     private function notOldTownEnglish()
     {
@@ -309,7 +290,7 @@ class USSDService
     private function saveGeoLocationServiceRequest(array $textArray): GeoLocation
     {
         return GeoLocation::create([
-            'location_description' => isset($textArray[5]) ? $textArray[5] : null,
+            'location_description' => isset($textArray[6]) ? $textArray[6] : null,
             'ward' => "Old Town",
             'constituency' => "Mvita Constituency",
             'lat' => null,
@@ -320,13 +301,34 @@ class USSDService
     private function saveServiceRequest($textArray, GeoLocation $geo): ServiceRequest
     {
         return ServiceRequest::create([
-            'details' => isset($textArray[2]) ? $textArray[2] : null,
-            'contact_info' => isset($textArray[3]) ? $textArray[3] : null,
-            'official' => isset($textArray[6]) ? $textArray[6] : null,
+            'details' => isset($textArray[3]) ? $textArray[3] : null,
+            'contact_info' => isset($textArray[4]) ? $textArray[4] : null,
+            'official' => isset($textArray[7]) ? $textArray[7] : null,
             'geo_location_id' => $geo ? $geo->id : null,
-            'type' => $textArray[1],
-            'household_number' => isset($textArray[4]) ? $textArray[4] : null
+            'type' => $textArray[2],
+            'household_number' => isset($textArray[5]) ? $textArray[5] : null
 
+        ]);
+    }
+
+    private function saveGeoLocationFeedback(array $textArray): GeoLocation
+    {
+        return GeoLocation::create([
+            'location_description' => isset($textArray[6]) ? $textArray[6] : null,
+            'ward' => isset($textArray[7]) ? $textArray[7] : null,
+            'constituency' => isset($textArray[8]) ? $textArray[8] : null,
+            'lat' => null,
+            'lng' => null
+        ]);
+    }
+
+    private function saveFeedback($textArray, GeoLocation $geo = null): Feedback
+    {
+        return Feedback::create([
+            'description' => isset($textArray[3]) ? $textArray[3] : null,
+            'official' => isset($textArray[5]) ? $textArray[5] : null,
+            'occurrence_date' => isset($textArray[4]) ? $textArray[4] : null,
+            'geo_location_id' => $geo ? $geo->id : null
         ]);
     }
 }
