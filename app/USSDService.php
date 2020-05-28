@@ -164,7 +164,6 @@ class USSDService
         $response = '';
         //TODO: REFACTOR!
         if ($textArray[2] == 98) {
-
             if ($stepsCount == 4) {
                 $response = "CON Please tell us about your request in details";
             }
@@ -377,8 +376,13 @@ class USSDService
 
     private function saveGeoLocationServiceRequest(array $textArray): GeoLocation
     {
+        $locationDesc = isset($textArray[6]) ? $textArray[6] : null;
+        if ($textArray[2] == 98) {
+            $locationDesc = isset($textArray[7]) ? $textArray[7] : null;
+        }
+
         return GeoLocation::create([
-            'location_description' => isset($textArray[6]) ? $textArray[6] : null,
+            'location_description' => $locationDesc,
             'ward' => "Old Town",
             'constituency' => "Mvita Constituency",
             'lat' => null,
@@ -388,14 +392,27 @@ class USSDService
 
     private function saveServiceRequest($textArray, GeoLocation $geo): ServiceRequest
     {
-        return ServiceRequest::create([
-            'details' => isset($textArray[3]) ? $textArray[3] : null,
-            'contact_info' => isset($textArray[4]) ? $textArray[4] : null,
-            'official' => isset($textArray[7]) ? $textArray[7] : null,
-            'geo_location_id' => $geo ? $geo->id : null,
-            'type' => $textArray[2],
-            'household_number' => isset($textArray[5]) ? $textArray[5] : null
+        $details = isset($textArray[3]) ? $textArray[3] : null;
+        $contactInfo = isset($textArray[4]) ? $textArray[4] : null;
+        $official = isset($textArray[7]) ? $textArray[7] : null;
+        $geoId = $geo ? $geo->id : null;
+        $type = $textArray[2];
+        $householdNumber = isset($textArray[5]) ? $textArray[5] : null;
 
+        if ($textArray[2] == 98) {
+            $details = isset($textArray[4]) ? $textArray[4] : null;
+            $contactInfo = isset($textArray[5]) ? $textArray[5] : null;
+            $official = isset($textArray[8]) ? $textArray[8] : null;
+            $type = $textArray[3];
+        }
+
+        return ServiceRequest::create([
+            'details' => $details,
+            'contact_info' => $contactInfo,
+            'official' => $official,
+            'geo_location_id' => $geoId,
+            'type' => $type,
+            'household_number' => $householdNumber
         ]);
     }
 
