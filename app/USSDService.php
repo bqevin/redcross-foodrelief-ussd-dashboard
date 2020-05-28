@@ -21,7 +21,7 @@ class USSDService
         $response = '';
         $ussdStringArray = explode("*", $text);
 
-        if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "2*1*7") {
+        if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "1*1*98*7" || $text == "2*1*7" || $text == "2*1*98*7") {
             if (!empty($parsedData = $this->fetchKEData())) {
                 list($cases, $deaths, $recoveries, $lastUpdated) = $parsedData;
             }
@@ -51,9 +51,9 @@ class USSDService
             $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 4) {
             $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
-        } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 5 || $ussdStringArray[3] == 5) {
+        } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 98 && $ussdStringArray[3] == 5) {
             $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
-        } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 6 || $ussdStringArray[3] == 5) {
+        } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 98 && $ussdStringArray[3] == 6) {
             $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 1) {
             $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
@@ -63,9 +63,9 @@ class USSDService
             $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 4) {
             $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
-        } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 5 || $ussdStringArray[3] == 5) {
+        } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 98 && $ussdStringArray[3] == 5) {
             $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
-        } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 6 || $ussdStringArray[3] == 5) {
+        } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 98 && $ussdStringArray[3] == 6) {
             $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } // General Feedback/Complains questions Starts here
         elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
