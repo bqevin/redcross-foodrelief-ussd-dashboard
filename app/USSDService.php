@@ -12,6 +12,7 @@ class USSDService
     ) {
         $response = '';
         $ussdStringArray = explode("*", $text);
+        var_dump($ussdStringArray);
 
         // Get ussd menu level number from the gateway
         $steps = count($ussdStringArray);
@@ -75,28 +76,28 @@ class USSDService
     {
         $response = '';
 
-        if ($stepsCount == 2) {
+        if ($stepsCount == 3) {
             $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
         }
 
-        if ($stepsCount == 3) {
+        if ($stepsCount == 4) {
             $response = "CON Tupe nambari ya simu tunaweza kuwasiliana na wewe hapa";
         }
 
-        if ($stepsCount == 4) {
+        if ($stepsCount == 5) {
             $response = "CON Katika nyumba yenu muko wangapi?";
         }
 
-        if ($stepsCount == 5) {
+        if ($stepsCount == 6) {
             $response = "CON Tunaweza kuifikia vipi nyumba yako? Tafadhali tupe ramani, rangi ya mlango wako. Nambari ya chumba chako.";
         }
 
-        if ($stepsCount == 6) {
+        if ($stepsCount == 7) {
             $response = "CON Ni nani mzee wa nyumba kumi mtaani kwenu?";
         }
 
         // end of questions
-        if ($stepsCount > 6) {
+        if ($stepsCount > 7) {
             $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
             $response = "END Ahsante kwa ombi yako, muhudumu wetu ataishughulikia kwa upesi iwezekwanavyo";
         }
@@ -108,28 +109,28 @@ class USSDService
     {
         $response = '';
 
-        if ($stepsCount == 2) {
+        if ($stepsCount == 3) {
             $response = "CON Please tell us about your request in details";
         }
 
-        if ($stepsCount == 3) {
+        if ($stepsCount == 4) {
             $response = "CON Please write here phone number we can use to contact you";
         }
 
-        if ($stepsCount == 4) {
+        if ($stepsCount == 5) {
             $response = "CON How many are you in your household?";
         }
 
-        if ($stepsCount == 5) {
+        if ($stepsCount == 6) {
             $response = "CON How can we access your residence? Please share exact details including door number, color if there is one.";
         }
 
-        if ($stepsCount == 6) {
+        if ($stepsCount == 7) {
             $response = "CON Who is your village elder?";
         }
 
         // end of questions
-        if ($stepsCount > 6) {
+        if ($stepsCount > 7) {
             $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
             $response = "END Thank you for your request, a service agent will get back to you as soon as possible";
         }
@@ -141,32 +142,32 @@ class USSDService
     {
         $response = '';
 
-        if ($stepsCount == 2) {
+        if ($stepsCount == 3) {
             $response = "CON Maoni, lawama au pendekezo lako ni yepi?";
         }
 
-        if ($stepsCount == 3) {
+        if ($stepsCount == 4) {
             $response = "CON Kisa kimetokea lini?";
         }
 
-        if ($stepsCount == 4) {
+        if ($stepsCount == 5) {
             $response = "CON Mzee wa mtaa wako ni nani?";
         }
 
-        if ($stepsCount == 5) {
+        if ($stepsCount == 6) {
             $response = "CON Elezea jinsi tutafika kwako. Tupe mwelekezo wa ramani, rangi ya nyumba na namba ya chumba kama kunayo";
         }
 
-        if ($stepsCount == 6) {
+        if ($stepsCount == 7) {
             $response = "CON Jina la kata yako?";
         }
-        if ($stepsCount == 7) {
+        if ($stepsCount == 8) {
             $response = "CON Unatoka eneo bunge gani?";
         }
 
 
         // end of questions
-        if ($stepsCount > 7) {
+        if ($stepsCount > 8) {
             $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
 
             $response = "END Ahsante kwa kuripoti hilo tukio. Itashughulikwa kwa haraka iwezekenavyo!";
@@ -179,32 +180,32 @@ class USSDService
     {
         $response = '';
 
-        if ($stepsCount == 2) {
+        if ($stepsCount == 3) {
             $response = "CON What is your suggestions, complain or report?";
         }
 
-        if ($stepsCount == 3) {
+        if ($stepsCount == 4) {
             $response = "CON When did this happen?";
         }
 
-        if ($stepsCount == 4) {
+        if ($stepsCount == 5) {
             $response = "CON What is the name of your village elder?";
         }
 
-        if ($stepsCount == 5) {
+        if ($stepsCount == 6) {
             $response = "CON Where do you stay? Please be detailed as possible";
         }
 
-        if ($stepsCount == 6) {
+        if ($stepsCount == 7) {
             $response = "CON What is the name of your ward?";
         }
-        if ($stepsCount == 7) {
+        if ($stepsCount == 8) {
             $response = "CON What is the name of your constituency?";
         }
 
 
         // end of questions
-        if ($stepsCount > 7) {
+        if ($stepsCount > 8) {
             $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
             $response = "END Thank you for the report. This will be acted upon by respective people as soon as possible!";
         }
@@ -223,7 +224,7 @@ class USSDService
 
     private function welcomeTextEnglish()
     {
-        $response = "CON Are you Old Town resident?. \n\n";
+        $response = "CON Are you an Old Town resident?. \n\n";
         $response .= "1. Yes \n";
         $response .= "2. No";
 
