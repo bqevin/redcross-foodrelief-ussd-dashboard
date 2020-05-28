@@ -2,6 +2,10 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Goutte\Client;
+use Symfony\Component\HttpClient\HttpClient;
+
 class USSDService
 {
     public function processText(
@@ -10,8 +14,15 @@ class USSDService
         $phoneNumber,
         $text
     ) {
+        $recoveries = 'calculating...';
+        $cases = 'calculating...';
+        $deaths = 'calculating...';
+        $lastUpdated = Carbon::today()->toDateTimeString();
         $response = '';
         $ussdStringArray = explode("*", $text);
+        if (!empty($parsedData = $this->fetchKEData())) {
+            list($cases, $deaths, $recoveries, $lastUpdated) = $parsedData;
+        }
 
         // Get ussd menu level number from the gateway
         $steps = count($ussdStringArray);
@@ -59,13 +70,13 @@ class USSDService
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
             $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($text == "1*2*2") {
-            $response = "END Thank you for your feedback. Stay Safe.";
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\n Thank you for your feedback. Stay Safe.";
         } elseif ($text == "2*2*2") {
-            $response = "END Ahsante. Kwaheri!";
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nAhsante. Kwaheri!";
         } else if ($text == "1*1*7") {
-            $response = "END Thank you for checking out our hotline. Stay Safe.";
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nThank you for checking out our hotline. Stay Safe.";
         } else if ($text == "2*1*7") {
-            $response = "END Ahsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nAhsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
         }
 
         return $response;
@@ -370,5 +381,29 @@ class USSDService
                 'text_array' => $textArray,
             ])
         ]);
+    }
+
+    private function fetchKEData()
+    {
+        try {
+            $client = new Client(HttpClient::create(['timeout' => 7]));
+            $crawler = $client->request(
+                'GET',
+                'https://www.worldometers.info/coronavirus/country/kenya/'
+            );
+            $lastUpdated = $crawler->filter('.content-inner > div')->eq(1)->text();
+            $resultsBag = $crawler->filter(
+                '.maincounter-number'
+            )->each(
+                function ($node) {
+                    return $node->filter('span')->text();
+                }
+            );
+            $resultsBag[] = $lastUpdated;
+
+            return $resultsBag;
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 }
