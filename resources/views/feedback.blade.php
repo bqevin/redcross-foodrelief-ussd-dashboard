@@ -162,7 +162,7 @@
                             <td>{{($feedback->geoLocation) ? $feedback->geoLocation->location_description : 'N/A'}}</td>
                             <td>{{$feedback->official}}</td>
                             <td>{{$feedback->occurrence_date}}</td>
-                            <td>{{$feedback->created_at->tz('Asia/Almaty')->toDayDateTimeString()}}</td>
+                            <td>{{$feedback->created_at->toDayDateTimeString()}}</td>
                         </tr>
                     @endforeach
 
