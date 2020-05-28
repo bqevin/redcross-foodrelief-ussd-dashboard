@@ -70,12 +70,16 @@ class USSDService
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
             $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($text == "1*2*2") {
+            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\n Thank you for your feedback. Stay Safe.";
         } elseif ($text == "2*2*2") {
+            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nAhsante. Kwaheri!";
         } else if ($text == "1*1*7") {
+            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nThank you for checking out our hotline. Stay Safe.";
         } else if ($text == "2*1*7") {
+            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nAhsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
         }
 
@@ -377,6 +381,23 @@ class USSDService
                 'service_code' => $serviceCode,
                 'phone_number' => $phoneNumber,
                 'service_request_id' => $serviceRequest->id,
+                'language' => $textArray[0],
+                'text_array' => $textArray,
+            ])
+        ]);
+    }
+
+    private function saveGuestMetaData(
+        $sessionId,
+        $serviceCode,
+        $phoneNumber,
+        $textArray
+    ): MetaData {
+        return MetaData::create([
+            'extra' => json_encode([
+                'session_id' => $sessionId,
+                'service_code' => $serviceCode,
+                'phone_number' => $phoneNumber,
                 'language' => $textArray[0],
                 'text_array' => $textArray,
             ])
