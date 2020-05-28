@@ -98,14 +98,7 @@ class USSDService
         // end of questions
         if ($stepsCount > 7) {
             $serviceRequest = $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
-            MetaData::create([
-                'extra' => json_encode([
-                    'session_id' => $sessionId,
-                    'service_code' => $serviceCode,
-                    'phone_number' => $phoneNumber,
-                    'service_request_id' => $serviceRequest->id
-                ])
-            ]);
+            $this->saveServiceRequestMetadata($serviceRequest, $sessionId, $serviceCode, $phoneNumber, $textArray);
             $response = "END Ahsante kwa ombi yako, muhudumu wetu ataishughulikia kwa upesi iwezekwanavyo";
         }
 
@@ -139,14 +132,7 @@ class USSDService
         // end of questions
         if ($stepsCount > 7) {
             $serviceRequest = $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
-            MetaData::create([
-                'extra' => json_encode([
-                    'session_id' => $sessionId,
-                    'service_code' => $serviceCode,
-                    'phone_number' => $phoneNumber,
-                    'service_request_id' => $serviceRequest->id
-                ])
-            ]);
+            $this->saveServiceRequestMetadata($serviceRequest, $sessionId, $serviceCode, $phoneNumber, $textArray);
             $response = "END Thank you for your request, a service agent will get back to you as soon as possible";
         }
 
@@ -184,15 +170,7 @@ class USSDService
         // end of questions
         if ($stepsCount > 8) {
             $feedback = $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
-            MetaData::create([
-                'extra' => json_encode([
-                    'session_id' => $sessionId,
-                    'service_code' => $serviceCode,
-                    'phone_number' => $phoneNumber,
-                    'feedback_id' => $feedback->id
-                ])
-            ]);
-
+            $this->saveFeedbackMetadata($feedback, $sessionId, $serviceCode, $phoneNumber, $textArray); // Save Feedback metadata
             $response = "END Ahsante kwa kuripoti hilo tukio. Itashughulikwa kwa haraka iwezekenavyo!";
         }
 
@@ -230,14 +208,7 @@ class USSDService
         // end of questions
         if ($stepsCount > 8) {
             $feedback = $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
-            MetaData::create([
-                'extra' => json_encode([
-                    'session_id' => $sessionId,
-                    'service_code' => $serviceCode,
-                    'phone_number' => $phoneNumber,
-                    'feedback_id' => $feedback->id
-                ])
-            ]);
+            $this->saveFeedbackMetadata($feedback, $sessionId, $serviceCode, $phoneNumber, $textArray); // save Metadata
             $response = "END Thank you for the report. This will be acted upon by respective people as soon as possible!";
         }
 
@@ -360,6 +331,44 @@ class USSDService
             'official' => isset($textArray[5]) ? $textArray[5] : null,
             'occurrence_date' => isset($textArray[4]) ? $textArray[4] : null,
             'geo_location_id' => $geo ? $geo->id : null
+        ]);
+    }
+
+    private function saveFeedbackMetadata(
+        Feedback $feedback,
+        $sessionId,
+        $serviceCode,
+        $phoneNumber,
+        $textArray
+    ): MetaData {
+        return MetaData::create([
+            'extra' => json_encode([
+                'session_id' => $sessionId,
+                'service_code' => $serviceCode,
+                'phone_number' => $phoneNumber,
+                'feedback_id' => $feedback->id,
+                'language' => $textArray[0],
+                'text_array' => $textArray,
+            ])
+        ]);
+    }
+
+    private function saveServiceRequestMetadata(
+        ServiceRequest $serviceRequest,
+        $sessionId,
+        $serviceCode,
+        $phoneNumber,
+        $textArray
+    ): MetaData {
+        return MetaData::create([
+            'extra' => json_encode([
+                'session_id' => $sessionId,
+                'service_code' => $serviceCode,
+                'phone_number' => $phoneNumber,
+                'service_request_id' => $serviceRequest->id,
+                'language' => $textArray[0],
+                'text_array' => $textArray,
+            ])
         ]);
     }
 }
