@@ -264,7 +264,7 @@ class USSDService
 
     private function launchText()
     {
-        $response = "CON Welcome to Mombasa County Relief Services. We are here to Serve you.\n\n Pick a language (Chagua lugha) \n\n";
+        $response = "CON Welcome to Mombasa County Relief Services.\nWe are here to Serve you.\n\n Pick a language (Chagua lugha) \n\n";
         $response .= "1. English \n";
         $response .= "2. Swahili";
 
