@@ -63,7 +63,7 @@ class USSDService
         } elseif ($text == "2*2*2") {
             $response = "END Ahsante. Kwaheri!";
         } else if ($text == "1*1*7") {
-            $response = "END Thank you for checking out our hotline. Goodbye!";
+            $response = "END Thank you for checking out our hotline. Stay Safe.";
         } else if ($text == "2*1*7") {
             $response = "END Ahsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
         }
