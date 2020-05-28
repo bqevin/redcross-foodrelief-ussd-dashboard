@@ -19,6 +19,7 @@ class USSDService
         $response = '';
         $ussdStringArray = explode("*", $text);
 
+        //TODO: REFACTOR!
         if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "1*1*98*7" || $text == "2*1*7" || $text == "2*1*98*7") {
             $stats = $this->getLatestStats();
             $cases = $stats->cases;
@@ -73,15 +74,19 @@ class USSDService
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
             $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($text == "1*2*2") {
+            //TODO: REFACTOR!
             $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\n Thank you for your feedback. Stay Safe.";
         } elseif ($text == "2*2*2") {
+            //TODO: REFACTOR!
             $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nAhsante. Kwaheri!";
         } else if ($text == "1*1*7" || $text == "1*1*98*7") {
+            //TODO: REFACTOR!
             $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nThank you for checking out our hotline. Stay Safe.";
         } else if ($text == "2*1*7" || $text == "2*1*98*7") {
+            //TODO: REFACTOR!
             $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nAhsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
         }
@@ -92,6 +97,37 @@ class USSDService
     private function loopServiceQuestionsSwahili($textArray, $stepsCount, $sessionId = null, $serviceCode = null, $phoneNumber = null)
     {
         $response = '';
+        //TODO: REFACTOR!
+        if ($textArray[2] == 98) {
+            if ($stepsCount == 4) {
+                $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
+            }
+
+            if ($stepsCount == 5) {
+                $response = "CON Tupe nambari ya simu tunaweza kuwasiliana na wewe hapa";
+            }
+
+            if ($stepsCount == 6) {
+                $response = "CON Katika nyumba yenu muko wangapi?";
+            }
+
+            if ($stepsCount == 7) {
+                $response = "CON Tunaweza kuifikia vipi nyumba yako? Tafadhali tupe ramani, rangi ya mlango wako. Nambari ya chumba chako.";
+            }
+
+            if ($stepsCount == 8) {
+                $response = "CON Ni nani mzee wa nyumba kumi mtaani kwenu?";
+            }
+
+            // end of questions
+            if ($stepsCount > 8) {
+                $serviceRequest = $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
+                $this->saveServiceRequestMetadata($serviceRequest, $sessionId, $serviceCode, $phoneNumber, $textArray);
+                $response = "END Ahsante kwa ombi yako, muhudumu wetu ataishughulikia kwa upesi iwezekwanavyo";
+            }
+
+            return $response;
+        }
 
         if ($stepsCount == 3) {
             $response = "CON Tafadhali eleza ombi lako kwa undani zaidi.";
@@ -126,6 +162,38 @@ class USSDService
     private function loopServiceQuestionsEnglish($textArray, $stepsCount, $sessionId = null, $serviceCode = null, $phoneNumber = null)
     {
         $response = '';
+        //TODO: REFACTOR!
+        if ($textArray[2] == 98) {
+
+            if ($stepsCount == 4) {
+                $response = "CON Please tell us about your request in details";
+            }
+
+            if ($stepsCount == 5) {
+                $response = "CON Please reply with your phone number, in order for us to contact you.";
+            }
+
+            if ($stepsCount == 6) {
+                $response = "CON How many are you in your household?";
+            }
+
+            if ($stepsCount == 7) {
+                $response = "CON How can we access your residence? Please share exact details including door number, color if there is one.";
+            }
+
+            if ($stepsCount == 8) {
+                $response = "CON Who is your village elder?";
+            }
+
+            // end of questions
+            if ($stepsCount > 8) {
+                $serviceRequest = $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
+                $this->saveServiceRequestMetadata($serviceRequest, $sessionId, $serviceCode, $phoneNumber, $textArray);
+                $response = "END Thank you for your request, a service agent will get back to you as soon as possible";
+            }
+
+            return $response;
+        }
 
         if ($stepsCount == 3) {
             $response = "CON Please tell us about your request in details";
@@ -352,6 +420,7 @@ class USSDService
         ]);
     }
 
+    //TODO: REFACTOR!
     private function saveFeedbackMetadata(
         Feedback $feedback,
         $sessionId,
@@ -371,6 +440,7 @@ class USSDService
         ]);
     }
 
+    //TODO: REFACTOR!
     private function saveServiceRequestMetadata(
         ServiceRequest $serviceRequest,
         $sessionId,
@@ -390,6 +460,7 @@ class USSDService
         ]);
     }
 
+    //TODO: REFACTOR!
     private function saveGuestMetaData(
         $sessionId,
         $serviceCode,

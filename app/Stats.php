@@ -16,6 +16,7 @@ class Stats extends Model
 {
     protected $fillable = ['cases', 'deaths', 'recoveries', 'meta', 'creation',];
 
+    //TODO: REFACTOR!
     public static function fetchKEData()
     {
         try {
