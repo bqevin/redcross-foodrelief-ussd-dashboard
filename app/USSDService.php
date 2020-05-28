@@ -20,8 +20,11 @@ class USSDService
         $lastUpdated = Carbon::today()->toDateTimeString();
         $response = '';
         $ussdStringArray = explode("*", $text);
-        if (!empty($parsedData = $this->fetchKEData())) {
-            list($cases, $deaths, $recoveries, $lastUpdated) = $parsedData;
+
+        if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "2*1*7") {
+            if (!empty($parsedData = $this->fetchKEData())) {
+                list($cases, $deaths, $recoveries, $lastUpdated) = $parsedData;
+            }
         }
 
         // Get ussd menu level number from the gateway
