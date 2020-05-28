@@ -30,34 +30,34 @@ class USSDService
         } elseif ($text == "2*1") {
             $response = $this->oldTownServicesSwahili();
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 1) {
-            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 2) {
-            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 3) {
-            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 4) {
-            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 5) {
-            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 6) {
-            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 1) {
-            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 2) {
-            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 3) {
-            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 4) {
-            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 5) {
-            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 1 && $ussdStringArray[2] == 6) {
-            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopServiceQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } // General Feedback/Complains questions Starts here
         elseif ($ussdStringArray[0] == 1 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
-            $response = $this->loopFeedbackQuestionsEnglish($ussdStringArray, $steps);
+            $response = $this->loopFeedbackQuestionsEnglish($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
-            $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps);
+            $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($text == "1*2*2") {
             $response = "END Thank you for your feedback. Stay Safe.";
         } elseif ($text == "2*2*2") {
@@ -71,7 +71,7 @@ class USSDService
         return $response;
     }
 
-    private function loopServiceQuestionsSwahili($textArray, $stepsCount)
+    private function loopServiceQuestionsSwahili($textArray, $stepsCount, $sessionId = null, $serviceCode = null, $phoneNumber = null)
     {
         $response = '';
 
@@ -97,14 +97,22 @@ class USSDService
 
         // end of questions
         if ($stepsCount > 7) {
-            $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
+            $serviceRequest = $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
+            MetaData::create([
+                'extra' => json_encode([
+                    'session_id' => $sessionId,
+                    'service_code' => $serviceCode,
+                    'phone_number' => $phoneNumber,
+                    'service_request_id' => $serviceRequest->id
+                ])
+            ]);
             $response = "END Ahsante kwa ombi yako, muhudumu wetu ataishughulikia kwa upesi iwezekwanavyo";
         }
 
         return $response;
     }
 
-    private function loopServiceQuestionsEnglish($textArray, $stepsCount)
+    private function loopServiceQuestionsEnglish($textArray, $stepsCount, $sessionId = null, $serviceCode = null, $phoneNumber = null)
     {
         $response = '';
 
@@ -130,14 +138,22 @@ class USSDService
 
         // end of questions
         if ($stepsCount > 7) {
-            $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
+            $serviceRequest = $this->saveServiceRequest($textArray, $this->saveGeoLocationServiceRequest($textArray));
+            MetaData::create([
+                'extra' => json_encode([
+                    'session_id' => $sessionId,
+                    'service_code' => $serviceCode,
+                    'phone_number' => $phoneNumber,
+                    'service_request_id' => $serviceRequest->id
+                ])
+            ]);
             $response = "END Thank you for your request, a service agent will get back to you as soon as possible";
         }
 
         return $response;
     }
 
-    private function loopFeedbackQuestionsSwahili($textArray, $stepsCount)
+    private function loopFeedbackQuestionsSwahili($textArray, $stepsCount, $sessionId = null, $serviceCode = null, $phoneNumber = null)
     {
         $response = '';
 
@@ -167,7 +183,15 @@ class USSDService
 
         // end of questions
         if ($stepsCount > 8) {
-            $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
+            $feedback = $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
+            MetaData::create([
+                'extra' => json_encode([
+                    'session_id' => $sessionId,
+                    'service_code' => $serviceCode,
+                    'phone_number' => $phoneNumber,
+                    'feedback_id' => $feedback->id
+                ])
+            ]);
 
             $response = "END Ahsante kwa kuripoti hilo tukio. Itashughulikwa kwa haraka iwezekenavyo!";
         }
@@ -175,7 +199,7 @@ class USSDService
         return $response;
     }
 
-    private function loopFeedbackQuestionsEnglish($textArray, $stepsCount)
+    private function loopFeedbackQuestionsEnglish($textArray, $stepsCount, $sessionId = null, $serviceCode = null, $phoneNumber = null)
     {
         $response = '';
 
@@ -205,7 +229,15 @@ class USSDService
 
         // end of questions
         if ($stepsCount > 8) {
-            $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
+            $feedback = $this->saveFeedback($textArray, $this->saveGeoLocationFeedback($textArray));
+            MetaData::create([
+                'extra' => json_encode([
+                    'session_id' => $sessionId,
+                    'service_code' => $serviceCode,
+                    'phone_number' => $phoneNumber,
+                    'feedback_id' => $feedback->id
+                ])
+            ]);
             $response = "END Thank you for the report. This will be acted upon by respective people as soon as possible!";
         }
 
@@ -266,7 +298,6 @@ class USSDService
 
         return $response;
     }
-
 
 
     private function notOldTownEnglish()
