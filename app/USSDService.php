@@ -59,7 +59,7 @@ class USSDService
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
             $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps);
         } elseif ($text == "1*2*2") {
-            $response = "END Thank you for checking us out. Goodbye!";
+            $response = "END Thank you for your feedback. Stay Safe.";
         } elseif ($text == "2*2*2") {
             $response = "END Ahsante. Kwaheri!";
         } else if ($text == "1*1*7") {
@@ -113,7 +113,7 @@ class USSDService
         }
 
         if ($stepsCount == 4) {
-            $response = "CON Please write here phone number we can use to contact you";
+            $response = "CON Please reply with your phone number, in order for us to contact you.";
         }
 
         if ($stepsCount == 5) {
@@ -180,7 +180,7 @@ class USSDService
         $response = '';
 
         if ($stepsCount == 3) {
-            $response = "CON What is your suggestions, complain or report?";
+            $response = "CON What is your suggestion/ complain/ report?";
         }
 
         if ($stepsCount == 4) {
@@ -232,7 +232,7 @@ class USSDService
 
     private function launchText()
     {
-        $response = "CON Welcome to Mombasa County Services. We are here to Serve you.\n\n Pick a language (Chagua lugha) \n\n";
+        $response = "CON Welcome to Mombasa County Relief Services. We are here to Serve you.\n\n Pick a language (Chagua lugha) \n\n";
         $response .= "1. English \n";
         $response .= "2. Swahili";
 
@@ -255,7 +255,7 @@ class USSDService
 
     private function oldTownServicesEnglish()
     {
-        $response = "CON What service do you require from Mombasa County?  \n";
+        $response = "CON What service do you require from Mombasa County?\n";
         $response .= "1. Get tested for COVID-19\n";
         $response .= "2. Report a suspected COVID-19 case\n";
         $response .= "3. Healthcare assistance\n";
