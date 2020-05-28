@@ -70,17 +70,17 @@ class USSDService
         } elseif ($ussdStringArray[0] == 2 && $ussdStringArray[1] == 2 && $ussdStringArray[2] == 1) {
             $response = $this->loopFeedbackQuestionsSwahili($ussdStringArray, $steps, $sessionId, $serviceCode, $phoneNumber);
         } elseif ($text == "1*2*2") {
-            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
-            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\n Thank you for your feedback. Stay Safe.";
+            $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\n Thank you for your feedback. Stay Safe.";
         } elseif ($text == "2*2*2") {
-            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
-            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nAhsante. Kwaheri!";
+            $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nAhsante. Kwaheri!";
         } else if ($text == "1*1*7") {
-            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
-            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nThank you for checking out our hotline. Stay Safe.";
+            $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nThank you for checking out our hotline. Stay Safe.";
         } else if ($text == "2*1*7") {
-            $this->saveGuestMetaData($sessionId,$serviceCode,$phoneNumber,$ussdStringArray);
-            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries: {$recoveries}\n Deaths: {$deaths} \n\nAhsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
+            $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
+            $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nAhsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
         }
 
         return $response;
