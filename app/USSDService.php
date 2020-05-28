@@ -12,7 +12,6 @@ class USSDService
     ) {
         $response = '';
         $ussdStringArray = explode("*", $text);
-        var_dump($ussdStringArray);
 
         // Get ussd menu level number from the gateway
         $steps = count($ussdStringArray);
