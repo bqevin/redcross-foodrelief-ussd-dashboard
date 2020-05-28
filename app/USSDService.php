@@ -3,8 +3,6 @@
 namespace App;
 
 use Carbon\Carbon;
-use Goutte\Client;
-use Symfony\Component\HttpClient\HttpClient;
 
 class USSDService
 {
@@ -22,9 +20,11 @@ class USSDService
         $ussdStringArray = explode("*", $text);
 
         if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "1*1*98*7" || $text == "2*1*7" || $text == "2*1*98*7") {
-            if (!empty($parsedData = $this->fetchKEData())) {
-                list($cases, $deaths, $recoveries, $lastUpdated) = $parsedData;
-            }
+            $stats = $this->getLatestStats();
+            $cases = $stats->cases;
+            $deaths = $stats->deaths;
+            $recoveries = $stats->recoveries;
+            $lastUpdated = $stats->creation;
         }
 
         // Get ussd menu level number from the gateway
@@ -407,27 +407,8 @@ class USSDService
         ]);
     }
 
-    private function fetchKEData()
+    private function getLatestStats(): Stats
     {
-        try {
-            $client = new Client(HttpClient::create(['timeout' => 7]));
-            $crawler = $client->request(
-                'GET',
-                'https://www.worldometers.info/coronavirus/country/kenya/'
-            );
-            $lastUpdated = $crawler->filter('.content-inner > div')->eq(1)->text();
-            $resultsBag = $crawler->filter(
-                '.maincounter-number'
-            )->each(
-                function ($node) {
-                    return $node->filter('span')->text();
-                }
-            );
-            $resultsBag[] = $lastUpdated;
-
-            return $resultsBag;
-        } catch (\Exception $exception) {
-            return [];
-        }
+        return Stats::all()->last();
     }
 }
