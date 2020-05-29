@@ -133,21 +133,22 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">--}}
+{{--                <h1 class="h2">Dashboard</h1>--}}
+{{--                <div class="btn-toolbar mb-2 mb-md-0">--}}
+{{--                    <div class="btn-group mr-2">--}}
+{{--                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>--}}
+{{--                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <h2>Relief Food Distribution Feedback</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
+                        <th>Tracking ID</th>
                         <th>Feedback</th>
                         <th>Location</th>
                         <th>Village Elder</th>
@@ -158,6 +159,7 @@
                     <tbody>
                     @foreach ($feedbacks as $feedback)
                         <tr>
+                            <td>{{$feedback->id}}</td>
                             <td>{{$feedback->description}}</td>
                             <td>{{($feedback->geoLocation) ? $feedback->geoLocation->location_description : 'N/A'}}</td>
                             <td>{{$feedback->official}}</td>
