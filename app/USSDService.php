@@ -19,9 +19,6 @@ class USSDService
         $response = '';
         $ussdStringArray = explode("*", $text);
 
-        //Persist sessions for analytics
-        $this->saveOrUpdateSession($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
-
         //TODO: REFACTOR!
         if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "1*1*98*7" || $text == "2*1*7" || $text == "2*1*98*7") {
             $stats = $this->getLatestStats();
@@ -93,6 +90,9 @@ class USSDService
             $this->saveGuestMetaData($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
             $response = "END Kenya ({$lastUpdated})\n\nCases : {$cases}\n Recoveries : {$recoveries}\n Deaths : {$deaths} \n\nAhsante kwa kufika kwa huduma zetu za hotline. Kwaheri!";
         }
+
+        //Persist sessions for analytics
+        $this->saveOrUpdateSession($sessionId, $serviceCode, $phoneNumber, $ussdStringArray, $response);
 
         return $response;
     }
@@ -503,7 +503,8 @@ class USSDService
         $sessionId,
         $serviceCode,
         $phoneNumber,
-        $textArray
+        $textArray,
+        $finalResponse
     ) {
         $session = ATSession::where('at_id', $sessionId)->first();
         if ($session) {
@@ -514,6 +515,7 @@ class USSDService
                     'phone_number' => $phoneNumber,
                     'language' => $textArray[0],
                     'text_array' => $textArray,
+                    'final_response' => $finalResponse,
                 ])
             ]);
         }
@@ -526,6 +528,7 @@ class USSDService
                 'phone_number' => $phoneNumber,
                 'language' => $textArray[0],
                 'text_array' => $textArray,
+                'final_response' => $finalResponse,
             ])
         ]);
     }
