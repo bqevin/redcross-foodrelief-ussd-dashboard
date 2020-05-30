@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Feedback;
 use App\ServiceRequest;
 use App\USSDService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
@@ -32,12 +33,16 @@ class HomeController extends Controller
      */
     public function feedback()
     {
-        return view('feedback', ['feedbacks' => Feedback::all()]);
+        $todayFeedback = Feedback::whereDate('created_at', '>=', Carbon::today()->toDateTimeString())->get();
+
+        return view('feedback', ['feedbacks' => $todayFeedback]);
     }
 
     public function serviceRequest()
     {
-        return view('service-request', ['serviceRequests' => ServiceRequest::all()]);
+        $todayServiceRequest = ServiceRequest::whereDate('created_at', '>=', Carbon::today()->toDateTimeString())->get();
+
+        return view('service-request', ['serviceRequests' => $todayServiceRequest]);
     }
 
     public function ussdRequest(Request $request)
