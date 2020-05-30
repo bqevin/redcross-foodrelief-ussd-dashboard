@@ -504,7 +504,7 @@ class USSDService
         $serviceCode,
         $phoneNumber,
         $textArray
-    ): ATSession {
+    ) {
         $session = ATSession::where('at_id', $sessionId)->first();
         if ($session) {
             return $session->update([
