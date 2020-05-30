@@ -71,7 +71,7 @@
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUSSD"
                aria-expanded="true" aria-controls="collapseUSSD">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>USSD</span>
+                <span>USSD (Today)</span>
             </a>
             <div id="collapseUSSD" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -100,10 +100,10 @@
             <div id="collapseInsight" class="collapse" aria-labelledby="headingPages"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">User journeys</h6>
-                    <a class="collapse-item" href="">Language preference</a>
-                    <a class="collapse-item" href="">Old Town Interest</a>
-                    <a class="collapse-item" href="">Preview app</a>
+                    <h6 class="collapse-header">User Experience</h6>
+                    <a class="collapse-item" href="">Language Distribution</a>
+                    <a class="collapse-item" href="">Requests Distribution</a>
+                    <a class="collapse-item" href="">USSD Traffic</a>
                 </div>
             </div>
         </li>
