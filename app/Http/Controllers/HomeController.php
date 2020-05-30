@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\ATSession;
 use App\Feedback;
 use App\MetaData;
 use App\ServiceRequest;
 use App\USSDService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -36,14 +38,41 @@ class HomeController extends Controller
     {
         $totalFeedback = Feedback::all()->count();
         $totalServiceRequests = ServiceRequest::all()->count();
-        $totalInteraction = MetaData::all()->count();
+        $metadata = MetaData::all();
         $totalIssues = $totalFeedback + $totalServiceRequests;
+        $english = $metadata->filter(function ($meta) {
+            $extra = json_decode($meta->extra);
+            if ($extra->language) {
+                return $extra->language == '1';
+            }
+        });
+
+        $swahili = $metadata->filter(function ($meta) {
+            $extra = json_decode($meta->extra);
+            if ($extra->language) {
+                return $extra->language == '2';
+            }
+        });
 
         return view('sbadmin.home', [
             'feedback' => $totalFeedback,
             'serviceRequests' => $totalServiceRequests,
-            'interaction' => $totalInteraction,
-            'issues' => $totalIssues
+            'interactions' => $metadata->count(),
+            'english' => $english->count(),
+            'swahili' => $swahili->count(),
+            'issues' => $totalIssues,
+            'jan_sessions' => $this->getTrafficForMonthOf(1)->count(),
+            'feb_sessions' => $this->getTrafficForMonthOf(2)->count(),
+            'mar_sessions' => $this->getTrafficForMonthOf(3)->count(),
+            'apr_sessions' => $this->getTrafficForMonthOf(4)->count(),
+            'may_sessions' => $this->getTrafficForMonthOf(5)->count(),
+            'jun_sessions' => $this->getTrafficForMonthOf(6)->count(),
+            'jul_sessions' => $this->getTrafficForMonthOf(7)->count(),
+            'aug_sessions' => $this->getTrafficForMonthOf(8)->count(),
+            'sep_sessions' => $this->getTrafficForMonthOf(9)->count(),
+            'oct_sessions' => $this->getTrafficForMonthOf(10)->count(),
+            'nov_sessions' => $this->getTrafficForMonthOf(11)->count(),
+            'dec_sessions' => $this->getTrafficForMonthOf(12)->count(),
         ]);
     }
 
@@ -61,7 +90,7 @@ class HomeController extends Controller
 
     public function feedback()
     {
-        return view('sbadmin.all-feedback', ['feedback' =>Feedback::all()]);
+        return view('sbadmin.all-feedback', ['feedback' => Feedback::all()]);
     }
 
     public function todayServiceRequest()
@@ -85,5 +114,10 @@ class HomeController extends Controller
         $text = $request->get('text');
 
         return $this->ussdService->processText($sessionId, $serviceCode, $phoneNumber, $text);
+    }
+
+    private function getTrafficForMonthOf(int $monthInt): ?Builder
+    {
+        return ATSession::whereMonth('created_at', $monthInt);
     }
 }
