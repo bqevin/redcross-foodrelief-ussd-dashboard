@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Feedback;
+use App\MetaData;
 use App\ServiceRequest;
 use App\USSDService;
 use Carbon\Carbon;
@@ -31,18 +32,48 @@ class HomeController extends Controller
      *
      * @return Renderable
      */
-    public function feedback()
+    public function home()
+    {
+        $totalFeedback = Feedback::all()->count();
+        $totalServiceRequests = ServiceRequest::all()->count();
+        $totalInteraction = MetaData::all()->count();
+        $totalIssues = $totalFeedback + $totalServiceRequests;
+
+        return view('sbadmin.home', [
+            'feedback' => $totalFeedback,
+            'serviceRequests' => $totalServiceRequests,
+            'interaction' => $totalInteraction,
+            'issues' => $totalIssues
+        ]);
+    }
+
+    /**
+     * Show the feedback.
+     *
+     * @return Renderable
+     */
+    public function todayFeedback()
     {
         $todayFeedback = Feedback::whereDate('created_at', '>=', Carbon::today()->toDateTimeString())->get();
 
-        return view('feedback', ['feedbacks' => $todayFeedback]);
+        return view('sbadmin.today-feedback', ['feedback' => $todayFeedback]);
+    }
+
+    public function feedback()
+    {
+        return view('sbadmin.all-feedback', ['feedback' =>Feedback::all()]);
+    }
+
+    public function todayServiceRequest()
+    {
+        $todayServiceRequest = ServiceRequest::whereDate('created_at', '>=', Carbon::today()->toDateTimeString())->get();
+
+        return view('sbadmin.today-service-request', ['serviceRequests' => $todayServiceRequest]);
     }
 
     public function serviceRequest()
     {
-        $todayServiceRequest = ServiceRequest::whereDate('created_at', '>=', Carbon::today()->toDateTimeString())->get();
-
-        return view('service-request', ['serviceRequests' => $todayServiceRequest]);
+        return view('sbadmin.all-service-request', ['serviceRequests' => ServiceRequest::all()]);
     }
 
     public function ussdRequest(Request $request)

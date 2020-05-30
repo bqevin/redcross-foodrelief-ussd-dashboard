@@ -21,6 +21,8 @@ Route::post('/callback/ussd', 'HomeController@ussdRequest');
 
 
 Auth::routes();
-
-Route::get('/feedback', 'HomeController@feedback')->name('feedback')->middleware('auth');
-Route::get('/service-request', 'HomeController@serviceRequest')->name('service-request')->middleware('auth');
+Route::get('/home', 'HomeController@home')->name('home')->middleware('auth');
+Route::get('/feedback', 'HomeController@todayFeedback')->name('feedback')->middleware('auth');
+Route::get('/all-feedback', 'HomeController@feedback')->name('all-feedback')->middleware('auth');
+Route::get('/service-request', 'HomeController@todayServiceRequest')->name('service-request')->middleware('auth');
+Route::get('/all-service-request', 'HomeController@serviceRequest')->name('all-service-request')->middleware('auth');
