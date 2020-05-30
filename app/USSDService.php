@@ -19,6 +19,9 @@ class USSDService
         $response = '';
         $ussdStringArray = explode("*", $text);
 
+        //Persist sessions for analytics
+        $this->saveOrUpdateSession($sessionId, $serviceCode, $phoneNumber, $ussdStringArray);
+
         //TODO: REFACTOR!
         if ($text == "1*2*2" || $text == "2*2*2" || $text == "1*1*7" || $text == "1*1*98*7" || $text == "2*1*7" || $text == "2*1*98*7") {
             $stats = $this->getLatestStats();
@@ -486,6 +489,38 @@ class USSDService
     ): MetaData {
         return MetaData::create([
             'extra' => json_encode([
+                'session_id' => $sessionId,
+                'service_code' => $serviceCode,
+                'phone_number' => $phoneNumber,
+                'language' => $textArray[0],
+                'text_array' => $textArray,
+            ])
+        ]);
+    }
+
+
+    private function saveOrUpdateSession(
+        $sessionId,
+        $serviceCode,
+        $phoneNumber,
+        $textArray
+    ): ATSession {
+        $session = ATSession::where('at_id', $sessionId)->first();
+        if ($session) {
+            return $session->update([
+                'meta' => json_encode([
+                    'session_id' => $sessionId,
+                    'service_code' => $serviceCode,
+                    'phone_number' => $phoneNumber,
+                    'language' => $textArray[0],
+                    'text_array' => $textArray,
+                ])
+            ]);
+        }
+
+        return ATSession::create([
+            'at_id' => $sessionId,
+            'meta' => json_encode([
                 'session_id' => $sessionId,
                 'service_code' => $serviceCode,
                 'phone_number' => $phoneNumber,
