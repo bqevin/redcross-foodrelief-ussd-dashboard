@@ -117,8 +117,8 @@
             <div id="collapsePrevious" class="collapse" aria-labelledby="headingPages"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ url('/all-feedback') }}">Feedback <span class="badge badge-danger badge-counter">{{$feedback}}</span></a>
-                    <a class="collapse-item" href="{{ url('/all-service-request') }}">Service Requests <span class="badge badge-danger badge-counter">{{$serviceRequests}}</span></a>
+                    <a class="collapse-item" href="{{ url('/all-feedback') }}">Feedback </a>
+                    <a class="collapse-item" href="{{ url('/all-service-request') }}">Service Requests</a>
                 </div>
             </div>
         </li>
